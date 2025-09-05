@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Lightbulb, Trophy, Target } from 'lucide-react';
+import { Lightbulb, Trophy, Target, ArrowLeft } from 'lucide-react';
 
 interface GameConfig {
   question: string;
@@ -27,7 +27,11 @@ const CONFIG: GameConfig = {
   }
 };
 
-const QuizGame: React.FC = () => {
+interface QuizGameProps {
+  onBack?: () => void;
+}
+
+const QuizGame: React.FC<QuizGameProps> = ({ onBack }) => {
   const [hintsUsed, setHintsUsed] = useState<number>(0);
   const [totalScore, setTotalScore] = useState<number>(0);
   const [questionsAnswered, setQuestionsAnswered] = useState<number>(0);
@@ -83,6 +87,19 @@ const QuizGame: React.FC = () => {
         {/* Header with Score */}
         <Card className="shadow-lg border-2 border-primary/20">
           <CardHeader className="text-center">
+            <div className="flex items-center justify-between mb-4">
+              {onBack && (
+                <Button
+                  onClick={onBack}
+                  variant="outline"
+                  className="border-primary text-primary hover:bg-primary hover:text-white"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Volver
+                </Button>
+              )}
+              <div className="flex-1" />
+            </div>
             <CardTitle className="text-3xl font-bold text-primary flex items-center justify-center gap-2">
               <Trophy className="w-8 h-8" />
               Quiz Educativo
